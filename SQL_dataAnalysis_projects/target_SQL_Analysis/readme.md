@@ -5,10 +5,26 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 
 ### Column Profiling 
 
-The customers.csv contain following features:
+## 📁 Dataset: `orders.csv`
 
-Features                                                                       Description
-customer_id                                                                    ID of the consumer who made the purchase
+| Feature                        | Description                                                       |
+|-------------------------------|--------------------------------------------------------------------|
+| `order_id`                    | Unique identifier of the order                                     |
+| `customer_id`                 | Unique identifier for the customer                                 |
+| `order_status`                | Status of the order (e.g., delivered, shipped)                     |
+| `order_purchase_timestamp`    | Timestamp when the order was placed                                |
+| `order_delivered_customer_date` | Actual delivery date to the customer                             |
+| `order_estimated_delivery_date` | Estimated delivery date of the product                           |
+
+## 📁 Dataset: `payments.csv`
+
+| Feature             | Description                                                |
+|---------------------|------------------------------------------------------------|
+| `order_id`          | Unique ID of the order                                     |
+| `payment_type`      | Mode of payment (credit card, debit card, etc.)            |
+| `payment_value`     | Total amount paid                                          |
+| `payment_installments` | Number of EMI installments, if applicable               |
+
 
 
 
