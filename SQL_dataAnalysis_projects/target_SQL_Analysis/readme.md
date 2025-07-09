@@ -109,28 +109,28 @@ ORDER BY
   ordinal_position; 
 ```
 
-`SELECT table_name, COUNT(DISTINCT column_name) AS column_count FROM (SELECT`  
-  `table_name,`  
-  `column_name,`  
-  `data_type,`  
-  `ordinal_position`  
-`FROM`  
-`` `bigquery-scaler-tutorial.Target_SQL_business_case_2025.INFORMATION_SCHEMA.COLUMNS` ``  
-`ORDER BY`  
-  `table_name,`  
-  `ordinal_position) GROUP BY table_name`  
-`![][image2]`  
-**`There are a total 8 columns in the data set.`**
+```sql
+SELECT table_name, COUNT(DISTINCT column_name) AS column_count FROM (SELECT
+  table_name,
+  column_name,
+  data_type,
+  ordinal_position
+FROM
+`bigquery-scaler-tutorial.Target_SQL_business_case_2025.INFORMATION_SCHEMA.COLUMNS`
+ORDER BY
+  table_name,
+  ordinal_position) GROUP BY table_name;
+```
+ 
+There are a total 8 columns in the data set.
 
-*  `Exploring the time range within which orders has been placed.`
-
-
-      `SELECT  MIN(order_purchase_timestamp) AS first_order_placed_date,                          MAX(order_purchase_timestamp) AS last_order_placed_date`  
-`` FROM `Target_SQL_business_case_2025.orders` ``
-
-`![][image3]`  
-**`So First order was placed on 4th september 2016 at 15:19 UTC and Last order was`**  
-**`Placed on 17th october 2018 17:30 UTC`**
+Exploring the time range within which orders has been placed.
+```sql
+   SELECT  MIN(order_purchase_timestamp) AS first_order_placed_date, MAX(order_purchase_timestamp) AS last_order_placed_date
+FROM `Target_SQL_business_case_2025.orders`
+```
+So First order was placed on 4th september 2016 at 15:19 UTC and Last order was
+Placed on 17th october 2018 17:30 UTC
 
 *  `Locations(cities and states) customers ordered during given time period`
 
