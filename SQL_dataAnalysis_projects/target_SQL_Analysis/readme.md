@@ -121,9 +121,8 @@ ORDER BY
   table_name,
   ordinal_position) GROUP BY table_name;
 ```
- 
 There are a total 8 columns in the data set.
-
+-------------------------------------------------------------------------------------------------------------------------
 Exploring the time range within which orders has been placed.
 ```sql
    SELECT  MIN(order_purchase_timestamp) AS first_order_placed_date, MAX(order_purchase_timestamp) AS last_order_placed_date
