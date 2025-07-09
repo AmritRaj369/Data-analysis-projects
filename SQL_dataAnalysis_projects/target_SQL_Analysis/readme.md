@@ -97,16 +97,16 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 
 Exploring the Data set, all the tables and its columns.  This query will provide a list of columns for each specified table, including the column name, data type, and whether the column allows NULL values.
 ```sql
-`SELECT`  
-  `table_name,`  
-  `column_name,`  
-  `data_type,`  
-  `ordinal_position`  
-`FROM`  
-`` `bigquery-scaler-tutorial.Target_SQL_business_case_2025.INFORMATION_SCHEMA.COLUMNS` ``  
-`ORDER BY`  
-  `table_name,`  
-  `ordinal_position;`  
+SELECT  
+  table_name,  
+  column_name, 
+  data_type,  
+  ordinal_position
+FROM
+bigquery-scaler-tutorial.Target_SQL_business_case_2025.INFORMATION_SCHEMA.COLUMNS` ``  
+ORDER BY  
+  table_name,  
+  ordinal_position; 
 ```
 
 `SELECT table_name, COUNT(DISTINCT column_name) AS column_count FROM (SELECT`  
