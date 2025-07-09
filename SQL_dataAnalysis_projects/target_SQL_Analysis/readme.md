@@ -96,7 +96,7 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 ### Dataset exploratory Analysis
 
 Exploring the Data set, all the tables and its columns.  This query will provide a list of columns for each specified table, including the column name, data type, and whether the column allows NULL values.
-
+```sql
 `SELECT`  
   `table_name,`  
   `column_name,`  
@@ -107,7 +107,7 @@ Exploring the Data set, all the tables and its columns.  This query will provide
 `ORDER BY`  
   `table_name,`  
   `ordinal_position;`  
-`![][image1]`
+```
 
 `SELECT table_name, COUNT(DISTINCT column_name) AS column_count FROM (SELECT`  
   `table_name,`  
