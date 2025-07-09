@@ -1,5 +1,5 @@
 # Target-SQL Business Case
-###Project Overview
+### Project Overview
 Analyzed 100K+ e-commerce transactions from Target's Brazil operations (2016–2018) using structured SQL queries across 8 relational datasets. Conducted detailed exploratory data analysis (EDA) on orders, customer reviews, payments, deliveries, and freight to uncover seasonal trends, state-level spending, and delivery performance.
 Generated insights on economic impact, delivery speed vs. estimates, payment behavior, and monthly order patterns. Delivered actionable recommendations to improve order fulfillment, reduce freight costs, and enhance customer satisfaction.
 ###Column Profiling 
