@@ -5,6 +5,56 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 
 ### Column Profiling 
 
+## 📁 Dataset: `customers.csv`
+
+| Feature                    | Description                                         |
+| -------------------------- | --------------------------------------------------- |
+| `customer_id`              | ID of the consumer who made the purchase            |
+| `customer_unique_id`       | Unique ID of the consumer                           |
+| `customer_zip_code_prefix` | Zip Code of consumer’s location                     |
+| `customer_city`            | City from where the order was made                  |
+| `customer_state`           | State code from where the order was made (e.g., SP) |
+
+## 📁 Dataset: `sellers.csv`
+
+| Feature                  | Description                         |
+| ------------------------ | ----------------------------------- |
+| `seller_id`              | Unique ID of the seller registered  |
+| `seller_zip_code_prefix` | Zip Code of the seller’s location   |
+| `seller_city`            | City of the seller                  |
+| `seller_state`           | State code of the seller (e.g., SP) |
+
+## 📁 Dataset: `order_items.csv`
+
+| Feature               | Description                                       |
+| --------------------- | ------------------------------------------------- |
+| `order_id`            | Unique ID of the order made by the consumer       |
+| `order_item_id`       | Unique ID for each item in the order              |
+| `product_id`          | Unique ID for each product available on the site  |
+| `seller_id`           | Unique ID of the seller for the given order       |
+| `shipping_limit_date` | Deadline before which the product must be shipped |
+| `price`               | Price of the product                              |
+| `freight_value`       | Delivery fee charged to ship the product          |
+
+## 📁 Dataset: `geolocation.csv`
+
+| Feature                       | Description                |
+| ----------------------------- | -------------------------- |
+| `geolocation_zip_code_prefix` | First 5 digits of Zip Code |
+| `geolocation_lat`             | Latitude                   |
+| `geolocation_lng`             | Longitude                  |
+| `geolocation_city`            | City                       |
+| `geolocation_state`           | State code (e.g., SP)      |
+
+## 📁 Dataset: `payments.csv`
+
+| Feature             | Description                                                |
+|---------------------|------------------------------------------------------------|
+| `order_id`          | Unique ID of the order                                     |
+| `payment_type`      | Mode of payment (credit card, debit card, etc.)            |
+| `payment_value`     | Total amount paid                                          |
+| `payment_installments` | Number of EMI installments, if applicable               |
+
 ## 📁 Dataset: `orders.csv`
 
 | Feature                        | Description                                                       |
@@ -16,16 +66,31 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 | `order_delivered_customer_date` | Actual delivery date to the customer                             |
 | `order_estimated_delivery_date` | Estimated delivery date of the product                           |
 
-## 📁 Dataset: `payments.csv`
+## 📁 Dataset: `reviews.csv`
 
-| Feature             | Description                                                |
-|---------------------|------------------------------------------------------------|
-| `order_id`          | Unique ID of the order                                     |
-| `payment_type`      | Mode of payment (credit card, debit card, etc.)            |
-| `payment_value`     | Total amount paid                                          |
-| `payment_installments` | Number of EMI installments, if applicable               |
+| Feature                   | Description                                |
+| ------------------------- | ------------------------------------------ |
+| `review_id`               | ID of the review given by the customer     |
+| `order_id`                | Order ID corresponding to the review       |
+| `review_score`            | Rating given by the customer (1–5 scale)   |
+| `review_comment_title`    | Title of the review                        |
+| `review_comment_message`  | Body/message of the review                 |
+| `review_creation_date`    | Date when the review was created           |
+| `review_answer_timestamp` | Timestamp when the review was responded to |
 
+## 📁 Dataset: `products.csv`
 
+| Feature                      | Description                                |
+| ---------------------------- | ------------------------------------------ |
+| `product_id`                 | Unique ID for each product                 |
+| `product_category_name`      | Category of the product                    |
+| `product_name_lenght`        | Length of the product name                 |
+| `product_description_lenght` | Length of the product description          |
+| `product_photos_qty`         | Number of photos available for the product |
+| `product_weight_g`           | Weight of the product in grams             |
+| `product_length_cm`          | Length of the product in cm                |
+| `product_height_cm`          | Height of the product in cm                |
+| `product_width_cm`           | Width of the product in cm                 |
 
 
 ### Dataset exploratory Analysis
