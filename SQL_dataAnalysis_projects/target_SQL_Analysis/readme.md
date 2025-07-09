@@ -1,11 +1,11 @@
 # Target-SQL Business Case
-### Project Overview
+## Project Overview
 Analyzed 100K+ e-commerce transactions from Target's Brazil operations (2016–2018) using structured SQL queries across 8 relational datasets. Conducted detailed exploratory data analysis (EDA) on orders, customer reviews, payments, deliveries, and freight to uncover seasonal trends, state-level spending, and delivery performance.
 Generated insights on economic impact, delivery speed vs. estimates, payment behavior, and monthly order patterns. Delivered actionable recommendations to improve order fulfillment, reduce freight costs, and enhance customer satisfaction.
 
-### Column Profiling 
+## Column Profiling 
 
-## 📁 Dataset: `customers.csv`
+### 📁 Dataset: `customers.csv`
 
 | Feature                    | Description                                         |
 | -------------------------- | --------------------------------------------------- |
@@ -15,7 +15,7 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 | `customer_city`            | City from where the order was made                  |
 | `customer_state`           | State code from where the order was made (e.g., SP) |
 
-## 📁 Dataset: `sellers.csv`
+### 📁 Dataset: `sellers.csv`
 
 | Feature                  | Description                         |
 | ------------------------ | ----------------------------------- |
@@ -24,7 +24,7 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 | `seller_city`            | City of the seller                  |
 | `seller_state`           | State code of the seller (e.g., SP) |
 
-## 📁 Dataset: `order_items.csv`
+### 📁 Dataset: `order_items.csv`
 
 | Feature               | Description                                       |
 | --------------------- | ------------------------------------------------- |
@@ -36,7 +36,7 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 | `price`               | Price of the product                              |
 | `freight_value`       | Delivery fee charged to ship the product          |
 
-## 📁 Dataset: `geolocation.csv`
+### 📁 Dataset: `geolocation.csv`
 
 | Feature                       | Description                |
 | ----------------------------- | -------------------------- |
@@ -46,7 +46,7 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 | `geolocation_city`            | City                       |
 | `geolocation_state`           | State code (e.g., SP)      |
 
-## 📁 Dataset: `payments.csv`
+### 📁 Dataset: `payments.csv`
 
 | Feature             | Description                                                |
 |---------------------|------------------------------------------------------------|
@@ -55,7 +55,7 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 | `payment_value`     | Total amount paid                                          |
 | `payment_installments` | Number of EMI installments, if applicable               |
 
-## 📁 Dataset: `orders.csv`
+### 📁 Dataset: `orders.csv`
 
 | Feature                        | Description                                                       |
 |-------------------------------|--------------------------------------------------------------------|
@@ -66,7 +66,7 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 | `order_delivered_customer_date` | Actual delivery date to the customer                             |
 | `order_estimated_delivery_date` | Estimated delivery date of the product                           |
 
-## 📁 Dataset: `reviews.csv`
+### 📁 Dataset: `reviews.csv`
 
 | Feature                   | Description                                |
 | ------------------------- | ------------------------------------------ |
@@ -78,7 +78,7 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 | `review_creation_date`    | Date when the review was created           |
 | `review_answer_timestamp` | Timestamp when the review was responded to |
 
-## 📁 Dataset: `products.csv`
+### 📁 Dataset: `products.csv`
 
 | Feature                      | Description                                |
 | ---------------------------- | ------------------------------------------ |
@@ -93,9 +93,9 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 | `product_width_cm`           | Width of the product in cm                 |
 
 
-### Dataset exploratory Analysis
+## Dataset exploratory Analysis
 
-Exploring the Data set, all the tables and its columns.  This query will provide a list of columns for each specified table, including the column name, data type, and whether the column allows NULL values.
+### Exploring the Data set, all the tables and its columns.  This query will provide a list of columns for each specified table, including the column name, data type, and whether the column allows NULL values.
 ```sql
 SELECT  
   table_name,  
@@ -122,8 +122,9 @@ ORDER BY
   ordinal_position) GROUP BY table_name;
 ```
 There are a total 8 columns in the data set.
+
 -------------------------------------------------------------------------------------------------------------------------
-Exploring the time range within which orders has been placed.
+### Exploring the time range within which orders has been placed.
 ```sql
    SELECT  MIN(order_purchase_timestamp) AS first_order_placed_date, MAX(order_purchase_timestamp) AS last_order_placed_date
 FROM `Target_SQL_business_case_2025.orders`
