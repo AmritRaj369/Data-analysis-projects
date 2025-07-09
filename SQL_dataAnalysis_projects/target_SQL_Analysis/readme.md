@@ -7,8 +7,8 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 
 The customers.csv contain following features:
 
-Features                     Description
-
+Features                                                                       Description
+customer_id                                                                    ID of the consumer who made the purchase
 
 
 
