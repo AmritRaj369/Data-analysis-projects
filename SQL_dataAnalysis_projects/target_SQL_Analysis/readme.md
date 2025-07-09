@@ -15,6 +15,10 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 | `customer_city`            | City from where the order was made                  |
 | `customer_state`           | State code from where the order was made (e.g., SP) |
 
+## Dataset Schema
+![image](https://github.com/user-attachments/assets/929cb3b4-f9d4-4d60-a58a-dff52ab20593)
+
+
 ### 📁 Dataset: `sellers.csv`
 
 | Feature                  | Description                         |
