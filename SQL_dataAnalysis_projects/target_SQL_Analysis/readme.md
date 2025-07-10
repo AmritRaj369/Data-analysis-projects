@@ -135,6 +135,7 @@ FROM `Target_SQL_business_case_2025.orders`
 ```
 So First order was placed on 4th september 2016 at 15:19 UTC and Last order was
 Placed on 17th october 2018 17:30 UTC
+
 -------------------------------------------------------------------------------------------------------------------------
 ### Locations(cities and states) customers ordered during given time period
   ```sql
@@ -144,6 +145,7 @@ Placed on 17th october 2018 17:30 UTC
 ```
 So from 27 different states and 4,119 cities people has placed order
 Between  4th september 2016 to 17th october 2018 with Target.
+
 -------------------------------------------------------------------------------------------------------------------------
 
 ## In Depth Exploration
@@ -166,6 +168,7 @@ We can see an increase in no. of orders placed from jan 2017 which shows dip in 
 Again we can see an increase in no. of orders placed from jan 2018 which shows a steep fall after august 2018.
 So we can see a monthly seasonality that there is an increase in no. of orders placed from jan to november then there
 is a drop in sales after november.
+
 -------------------------------------------------------------------------------------------------------------------------
 ### Trying to find the time of the day when maximum orders gets placed 
 ```sql
@@ -182,6 +185,7 @@ GROUP BY 1)
 ```
 Since the bulk of orders are concentrated in the afternoon, we could offer attractive discounts or special promotions 
 during off-peak hours to help balance the order volume throughout the day.
+
 -------------------------------------------------------------------------------------------------------------------------
 ## Evolution of E-commerce orders in the Brazil region:
 
@@ -202,6 +206,7 @@ ORDER BY customer_count DESC;
 ```
 So SP has the maximum number of customers followed by RJ and MG in 2nd and 3rd place.
 RR has the least no. of customers.
+
 -------------------------------------------------------------------------------------------------------------------------
 ## Impact on Economy: Analyzing the money movement by e-commerce by looking at order prices, freight and others.
 
@@ -220,6 +225,7 @@ base1 AS(
 SELECT *, ROUND((next_year_cost-cost)/cost*100, 2) AS percentage_increase FROM base1;
 ```
 Hence, there is a 137% increase in the cost of orders placed.
+
 -------------------------------------------------------------------------------------------------------------------------
 ### Checking Total & Average value of order price for each states of brazil.
 ```sql
@@ -230,6 +236,7 @@ SELECT c.customer_state,ROUND(SUM(p.payment_value),2) AS total_cost, ROUND(AVG(p
   ORDER BY 2 DESC,3 DESC;
 ```
 So the total cost of orders is highest in the SP state of brazil.
+
 -------------------------------------------------------------------------------------------------------------------------
  ### Calculating the Total & Average value of order freight for each state.
  ```sql
@@ -266,6 +273,7 @@ ORDER BY 2
 LIMIT 5)
 ```
 So, highest avg freight val is for state RR and lowest is for SP
+
 -------------------------------------------------------------------------------------------------------------------------
 ### Let's find the top 5 states with the highest & lowest average delivery time.
 ```sql
@@ -295,6 +303,7 @@ ORDER BY 2 DESC
 LIMIT 5;
 ```
 These are the top 5 states where the order reached the customer before the estimated delivery time.
+
 -------------------------------------------------------------------------------------------------------------------------
 ## Analysis based on the payments:
 
@@ -307,6 +316,7 @@ GROUP BY 2,3
 ORDER BY 1 DESC, 2;
 ```
 The highest orders were placed through credit cards.
+
 -------------------------------------------------------------------------------------------------------------------------
 ### let's find the no. of orders placed on the basis of the payment installments that have been paid.
 ```sql
@@ -317,6 +327,7 @@ GROUP BY 2
 ORDER BY 1 DESC;
 ```
 So, max orders were placed on 1st payments installment.
+
 -------------------------------------------------------------------------------------------------------------------------
 # Summary
 
