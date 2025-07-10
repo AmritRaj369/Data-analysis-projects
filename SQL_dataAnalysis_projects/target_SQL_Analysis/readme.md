@@ -100,6 +100,7 @@ Generated insights on economic impact, delivery speed vs. estimates, payment beh
 ## Dataset exploratory Analysis
 
 ### Exploring the Data set, all the tables and its columns.  This query will provide a list of columns for each specified table, including the column name, data type, and whether the column allows NULL values.
+
 ```sql
 SELECT  
   table_name,  
@@ -246,11 +247,10 @@ So the total cost of orders is highest in the SP state of brazil.
   GROUP BY 1
   ORDER BY 2 DESC,3 DESC;
 ```
-### Analysis based on sales, freight and delivery time.
 
 ## Analysis based on sales, freight and delivery time.
-### Finding no. of days taken to deliver each order from the order’s purchase date as delivery time.
-### Also, calculating the difference (in days) between the estimated & actual delivery date of an order.
+#### Finding no. of days taken to deliver each order from the order’s purchase date as delivery time.
+#### Also, calculating the difference (in days) between the estimated & actual delivery date of an order.
 ```sql
 SELECT order_id, DATE_DIFF(order_delivered_customer_date, order_purchase_timestamp, DAY) AS time_to_deliver,
 DATE_DIFF(order_delivered_customer_date, order_estimated_delivery_date, DAY) AS diff_estimated_delivery
