@@ -135,200 +135,190 @@ FROM `Target_SQL_business_case_2025.orders`
 ```
 So First order was placed on 4th september 2016 at 15:19 UTC and Last order was
 Placed on 17th october 2018 17:30 UTC
+-------------------------------------------------------------------------------------------------------------------------
+### Locations(cities and states) customers ordered during given time period
+  ```sql
+ SELECT COUNT(DISTINCT customer_state) AS states, COUNT(DISTINCT customer_city) AS city
+  FROM `Target_SQL_business_case_2025.customers`
+  WHERE customer_id IN (SELECT customer_id FROM `Target_SQL_business_case_2025.orders`);
+```
+So from 27 different states and 4,119 cities people has placed order
+Between  4th september 2016 to 17th october 2018 with Target.
+-------------------------------------------------------------------------------------------------------------------------
 
-*  `Locations(cities and states) customers ordered during given time period`
+## In Depth Exploration
 
-  `SELECT COUNT(DISTINCT customer_state) AS states, COUNT(DISTINCT customer_city) AS city`  
-  `` FROM `Target_SQL_business_case_2025.customers` ``  
-  ``WHERE customer_id IN (SELECT customer_id FROM `Target_SQL_business_case_2025.orders`);``  
-`![][image4]`  
-**`So from 27 different states and 4,119 cities people has placed order`**  
-**`Between  4th september 2016 to 17th october 2018 with Target.`**
-
-### In Depth Exploration
-
-* `Understanding the trend for orders placed for past years.`
-
-`SELECT EXTRACT(year FROM order_purchase_timestamp) AS year_,`  
-`EXTRACT(month FROM order_purchase_timestamp) AS month_,`  
-`COUNT(DISTINCT order_id) AS orders`  
-`` FROM `Target_SQL_business_case_2025.orders` ``  
-`GROUP BY 1,2`  
-`ORDER BY 1,2;`
-
-**`![][image5]`**  
-**`From the data we can see the following`**
-
-* **`Nov 2016 data is missing`**   
-* **`We can see an increase in no. of orders placed from jan 2017 which shows dip in november 2017.`**  
-* **`Again we can see an increase in no. of orders placed from jan 2018 which shows a steep fall after august 2018.`**
-
-**`So we can see a monthly seasonality that there is an increase in no. of orders placed from jan to november then there is a drop in sales after november.`**
-
-* **`Trying to find the time of the day when maximum orders gets placed`** 
-
-**`SELECT`**  
-**`SUM(CASE WHEN HOUR BETWEEN 0 AND 6 THEN orders END ) AS dawn,`**  
-**`SUM(CASE WHEN HOUR BETWEEN 7 AND 12 THEN orders END ) AS Morning,`**  
-**`SUM(CASE WHEN HOUR BETWEEN 13 AND 18 THEN orders END ) AS afternoon ,`**  
-**`SUM(CASE WHEN HOUR BETWEEN 19 AND 24 THEN orders END ) AS night`**  
-**`FROM`**  
-**`(SELECT EXTRACT(HOUR FROM order_purchase_timestamp) AS HOUR,`**  
-**`COUNT(DISTINCT order_id) AS orders`**  
-**`` FROM `Target_SQL_business_case_2025.orders` ``**  
-**`GROUP BY 1)`**  
-**`![][image6]`**
-
-**`Since the bulk of orders are concentrated in the afternoon, we could offer attractive discounts or special promotions during off-peak hours to help balance the order volume throughout the day.`**
-
-### Evolution of E-commerce orders in the Brazil region:
-
-`Analyzing the month on month no. of orders placed in each state of brazil.`
-
-`SELECT c.customer_state, EXTRACT(month FROM o.order_purchase_timestamp) AS order_month, COUNT(DISTINCT o.order_id) AS orders`  
-``FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.customers`c``  
-`ON o.customer_id = c.customer_id`  
-`GROUP BY 1,2`  
-`ORDER BY 1,2;`  
-`![][image7]`
-
-`/*Analysing the distribution of customers across state*/`  
-`SELECT customer_state, COUNT(DISTINCT customer_id) AS customer_count,`    
-`` FROM `Target_SQL_business_case_2025.customers` ``  
-`GROUP BY customer_state`  
-`ORDER BY customer_count DESC;`
-
-**`![][image8]`**
-
-**`So SP has the maximum number of customers followed by RJ and MG in 2nd and 3rd place.`**  
-**`RR has the least no. of customers.`**
-
-### **Impact on Economy: Analyzing the money movement by e-commerce by looking at order prices, freight and others.**
-
-* `Analyzing the cost of order from 2017 to 2018 and only from jan to aug because as per previous analysis this is the peak time`
+### Understanding the trend for orders placed for past years.
 
 
-`WITH base AS(`  
-  `SELECT EXTRACT(YEAR FROM o.order_purchase_timestamp) AS year_, SUM(p.payment_value) AS cost`  
-  ``FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.payments` p ON o.order_id = p.order_id``  
-  `WHERE (EXTRACT(YEAR FROM o.order_purchase_timestamp) BETWEEN 2017 AND 2018) AND (EXTRACT(MONTH FROM o.order_purchase_timestamp) BETWEEN 1 AND 8)`  
-  `GROUP BY 1`  
-`),`   
-`base1 AS(`  
-  `SELECT *, LEAD(cost, 1) OVER(ORDER BY year_) AS next_year_cost`  
-  `FROM base`  
-`)`  
-`SELECT *, ROUND((next_year_cost-cost)/cost*100, 2) AS percentage_increase FROM base1;`
+```sql
+SELECT EXTRACT(year FROM order_purchase_timestamp) AS year_,
+EXTRACT(month FROM order_purchase_timestamp) AS month_,
+COUNT(DISTINCT order_id) AS orders
+FROM `Target_SQL_business_case_2025.orders`
+GROUP BY 1,2
+ORDER BY 1,2;
+```
 
-**`![][image9]`**
+From the data we can see the following
+Nov 2016 data is missing 
+We can see an increase in no. of orders placed from jan 2017 which shows dip in november 2017.
+Again we can see an increase in no. of orders placed from jan 2018 which shows a steep fall after august 2018.
+So we can see a monthly seasonality that there is an increase in no. of orders placed from jan to november then there
+is a drop in sales after november.
+-------------------------------------------------------------------------------------------------------------------------
+### Trying to find the time of the day when maximum orders gets placed 
+```sql
+SELECT
+SUM(CASE WHEN HOUR BETWEEN 0 AND 6 THEN orders END ) AS dawn,
+SUM(CASE WHEN HOUR BETWEEN 7 AND 12 THEN orders END ) AS Morning,
+SUM(CASE WHEN HOUR BETWEEN 13 AND 18 THEN orders END ) AS afternoon ,
+SUM(CASE WHEN HOUR BETWEEN 19 AND 24 THEN orders END ) AS night
+FROM
+(SELECT EXTRACT(HOUR FROM order_purchase_timestamp) AS HOUR,
+COUNT(DISTINCT order_id) AS orders
+FROM `Target_SQL_business_case_2025.orders`
+GROUP BY 1)
+```
+Since the bulk of orders are concentrated in the afternoon, we could offer attractive discounts or special promotions 
+during off-peak hours to help balance the order volume throughout the day.
+-------------------------------------------------------------------------------------------------------------------------
+## Evolution of E-commerce orders in the Brazil region:
 
-**`Hence, there is a 137% increase in the cost of orders placed`**
+### Analyzing the month on month no. of orders placed in each state of brazil.
+```sql
+SELECT c.customer_state, EXTRACT(month FROM o.order_purchase_timestamp) AS order_month, COUNT(DISTINCT o.order_id) AS orders
+FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.customers`c
+ON o.customer_id = c.customer_id
+GROUP BY 1,2
+ORDER BY 1,2;
+```
+### Analysing the distribution of customers across state*/
+```sql
+SELECT customer_state, COUNT(DISTINCT customer_id) AS customer_count,  
+FROM `Target_SQL_business_case_2025.customers`
+GROUP BY customer_state
+ORDER BY customer_count DESC;
+```
+So SP has the maximum number of customers followed by RJ and MG in 2nd and 3rd place.
+RR has the least no. of customers.
+-------------------------------------------------------------------------------------------------------------------------
+## Impact on Economy: Analyzing the money movement by e-commerce by looking at order prices, freight and others.
 
-* `Checking Total & Average value of order price for each states of brazil.`
-
-`SELECT c.customer_state,ROUND(SUM(p.payment_value),2) AS total_cost, ROUND(AVG(p.payment_value), 2) AS avg_cost`  
-  ``FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.payments` p ON o.order_id = p.order_id``  
-  ``JOIN `Target_SQL_business_case_2025.customers` c ON c.customer_id = o.customer_id``  
-  `GROUP BY 1`  
-  `ORDER BY 2 DESC,3 DESC;`  
-`![][image10]`
-
-**`So the total cost of orders is highest in the SP state of brazil.`**
-
-*  `Calculating the Total & Average value of order freight for each state.`
-
-
-  `SELECT c.customer_state,ROUND(SUM(oi.freight_value),2) AS total_freight_cost, ROUND(AVG(oi.freight_value), 2) AS avg_freight_cost`  
-  ``FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.order_items` oi ON o.order_id = oi.order_id``  
-  ``JOIN `Target_SQL_business_case_2025.customers` c ON c.customer_id = o.customer_id``  
-  `GROUP BY 1`  
-  `ORDER BY 2 DESC,3 DESC;`
-
-**`![][image11]`**
-
+### Analyzing the cost of order from 2017 to 2018 and only from jan to aug because as per previous analysis this is the peak time
+```sql
+WITH base AS(
+  SELECT EXTRACT(YEAR FROM o.order_purchase_timestamp) AS year_, SUM(p.payment_value) AS cost
+  FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.payments` p ON o.order_id = p.order_id
+  WHERE (EXTRACT(YEAR FROM o.order_purchase_timestamp) BETWEEN 2017 AND 2018) AND (EXTRACT(MONTH FROM o.order_purchase_timestamp) BETWEEN 1 AND 8)
+  GROUP BY 1
+), 
+base1 AS(
+  SELECT *, LEAD(cost, 1) OVER(ORDER BY year_) AS next_year_cost
+  FROM base
+)
+SELECT *, ROUND((next_year_cost-cost)/cost*100, 2) AS percentage_increase FROM base1;
+```
+Hence, there is a 137% increase in the cost of orders placed.
+-------------------------------------------------------------------------------------------------------------------------
+### Checking Total & Average value of order price for each states of brazil.
+```sql
+SELECT c.customer_state,ROUND(SUM(p.payment_value),2) AS total_cost, ROUND(AVG(p.payment_value), 2) AS avg_cost
+  FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.payments` p ON o.order_id = p.order_id
+  JOIN `Target_SQL_business_case_2025.customers` c ON c.customer_id = o.customer_id
+  GROUP BY 1
+  ORDER BY 2 DESC,3 DESC;
+```
+So the total cost of orders is highest in the SP state of brazil.
+-------------------------------------------------------------------------------------------------------------------------
+ ### Calculating the Total & Average value of order freight for each state.
+ ```sql
+  SELECT c.customer_state,ROUND(SUM(oi.freight_value),2) AS total_freight_cost, ROUND(AVG(oi.freight_value), 2) AS avg_freight_cost
+  FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.order_items` oi ON o.order_id = oi.order_id
+  JOIN `Target_SQL_business_case_2025.customers` c ON c.customer_id = o.customer_id
+  GROUP BY 1
+  ORDER BY 2 DESC,3 DESC;
+```
 ### Analysis based on sales, freight and delivery time.
 
-* `Finding no. of days taken to deliver each order from the order’s purchase date as delivery time.`  
-* `Also, calculating the difference (in days) between the estimated & actual delivery date of an order.`
+## Analysis based on sales, freight and delivery time.
+### Finding no. of days taken to deliver each order from the order’s purchase date as delivery time.
+### Also, calculating the difference (in days) between the estimated & actual delivery date of an order.
+```sql
+SELECT order_id, DATE_DIFF(order_delivered_customer_date, order_purchase_timestamp, DAY) AS time_to_deliver,
+DATE_DIFF(order_delivered_customer_date, order_estimated_delivery_date, DAY) AS diff_estimated_delivery
+FROM `Target_SQL_business_case_2025.orders`
+```
+### let's find out the top 5 states with the highest & lowest average freight value.
+```sql
+(SELECT c.customer_state, ROUND(AVG(oi.freight_value), 2) AS avg_freight_val
+FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.order_items` oi ON o.order_id = oi.order_id
+JOIN `Target_SQL_business_case_2025.customers` c ON c.customer_id = o.customer_id
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 5)
+UNION ALL
+(SELECT c.customer_state, ROUND(AVG(oi.freight_value), 2) AS avg_freight_val
+FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.order_items` oi ON o.order_id = oi.order_id
+JOIN `Target_SQL_business_case_2025.customers` c ON c.customer_id = o.customer_id
+GROUP BY 1
+ORDER BY 2
+LIMIT 5)
+```
+So, highest avg freight val is for state RR and lowest is for SP
+-------------------------------------------------------------------------------------------------------------------------
+### Let's find the top 5 states with the highest & lowest average delivery time.
+```sql
+(SELECT c.customer_state, ROUND(AVG(DATE_DIFF(o.order_delivered_customer_date, o.order_purchase_timestamp, DAY)), 2) AS avg_time_to_deliver
+FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.customers` c
+ON o.customer_id = c.customer_id
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 5)
+UNION ALL
+(SELECT c.customer_state, ROUND(AVG(DATE_DIFF(o.order_delivered_customer_date, o.order_purchase_timestamp, DAY)), 2) AS avg_time_to_deliver
+FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.customers` c
+ON o.customer_id = c.customer_id
+GROUP BY 1
+ORDER BY 2
+LIMIT 5);
+```
+### Let's find out the top 5 states where the order delivery is really fast as compared to the estimated date of delivery.
 
-`SELECT order_id, DATE_DIFF(order_delivered_customer_date, order_purchase_timestamp, DAY) AS time_to_deliver,`  
-`DATE_DIFF(order_delivered_customer_date, order_estimated_delivery_date, DAY) AS diff_estimated_delivery`  
-`` FROM `Target_SQL_business_case_2025.orders` ``  
-`![][image12]`
+```sql
+SELECT c.customer_state,
+ROUND(AVG(DATE_DIFF(o.order_estimated_delivery_date, o.order_delivered_customer_date, DAY)),2) AS avg_diff_estimated_delivery
+FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.customers`c
+ON o.customer_id = c.customer_id
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 5;
+```
+These are the top 5 states where the order reached the customer before the estimated delivery time.
+-------------------------------------------------------------------------------------------------------------------------
+## Analysis based on the payments:
 
-`let's find out the top 5 states with the highest & lowest average freight value.`  
-`(SELECT c.customer_state, ROUND(AVG(oi.freight_value), 2) AS avg_freight_val`  
-``FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.order_items` oi ON o.order_id = oi.order_id``  
-``JOIN `Target_SQL_business_case_2025.customers` c ON c.customer_id = o.customer_id``  
-`GROUP BY 1`  
-`ORDER BY 2 DESC`  
-`LIMIT 5)`  
-`UNION ALL`  
-`(SELECT c.customer_state, ROUND(AVG(oi.freight_value), 2) AS avg_freight_val`  
-``FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.order_items` oi ON o.order_id = oi.order_id``  
-``JOIN `Target_SQL_business_case_2025.customers` c ON c.customer_id = o.customer_id``  
-`GROUP BY 1`  
-`ORDER BY 2`  
-`LIMIT 5)`  
-![][image13]  
-**So, highest avg freight val is for state RR and lowest is for SP**
-
-* `Let's find the top 5 states with the highest & lowest average delivery time.`
-
-`(SELECT c.customer_state, ROUND(AVG(DATE_DIFF(o.order_delivered_customer_date, o.order_purchase_timestamp, DAY)), 2) AS avg_time_to_deliver`  
-``FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.customers` c``  
-`ON o.customer_id = c.customer_id`  
-`GROUP BY 1`  
-`ORDER BY 2 DESC`  
-`LIMIT 5)`  
-`UNION ALL`  
-`(SELECT c.customer_state, ROUND(AVG(DATE_DIFF(o.order_delivered_customer_date, o.order_purchase_timestamp, DAY)), 2) AS avg_time_to_deliver`  
-``FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.customers` c``  
-`ON o.customer_id = c.customer_id`  
-`GROUP BY 1`  
-`ORDER BY 2`  
-`LIMIT 5);`
-
-![][image14]
-
-* `Let's find out the top 5 states where the order delivery is really fast as compared to the estimated date of delivery.`
-
-
-`SELECT c.customer_state,`  
-`ROUND(AVG(DATE_DIFF(o.order_estimated_delivery_date, o.order_delivered_customer_date, DAY)),2) AS avg_diff_estimated_delivery`  
-``FROM `Target_SQL_business_case_2025.orders` o JOIN `Target_SQL_business_case_2025.customers`c``  
-`ON o.customer_id = c.customer_id`  
-`GROUP BY 1`  
-`ORDER BY 2 DESC`  
-`LIMIT 5;`  
-`![][image15]`  
-**`These are the top 5 states where the order reached the customer before the estimated delivery time.`**
-
-### **Analysis based on the payments:**
-
-* `Let's find the month on month no. of orders placed using different payment types.`
-
-`SELECT COUNT(DISTINCT o.order_id), EXTRACT(MONTH FROM  o.order_purchase_timestamp) AS order_month, p.payment_type`  
-``FROM `Target_SQL_business_case_2025.payments` p JOIN `Target_SQL_business_case_2025.orders` o``  
-`ON p.order_id = o.order_id`  
-`GROUP BY 2,3`  
-`ORDER BY 1 DESC, 2;`  
-`![][image16]`
-
-**`So the highest orders were placed through credit cards.`**
-
-* `let's find the no. of orders placed on the basis of the payment installments that have been paid.`
-
-`SELECT COUNT(DISTINCT o.order_id), p.payment_installments`  
-``FROM `Target_SQL_business_case_2025.payments` p JOIN `Target_SQL_business_case_2025.orders` o``  
-`ON p.order_id = o.order_id`  
-`GROUP BY 2`  
-`ORDER BY 1 DESC;`  
-**`![][image17]`**
-
-**`So, max orders were placed on 1st payments installment.`**
-
-### **Summary**
+### Let's find the month on month no. of orders placed using different payment types.
+```sql
+SELECT COUNT(DISTINCT o.order_id), EXTRACT(MONTH FROM  o.order_purchase_timestamp) AS order_month, p.payment_type
+FROM `Target_SQL_business_case_2025.payments` p JOIN `Target_SQL_business_case_2025.orders` o
+ON p.order_id = o.order_id
+GROUP BY 2,3
+ORDER BY 1 DESC, 2;
+```
+The highest orders were placed through credit cards.
+-------------------------------------------------------------------------------------------------------------------------
+### let's find the no. of orders placed on the basis of the payment installments that have been paid.
+```sql
+SELECT COUNT(DISTINCT o.order_id), p.payment_installments
+FROM `Target_SQL_business_case_2025.payments` p JOIN `Target_SQL_business_case_2025.orders` o
+ON p.order_id = o.order_id
+GROUP BY 2
+ORDER BY 1 DESC;
+```
+So, max orders were placed on 1st payments installment.
+-------------------------------------------------------------------------------------------------------------------------
+# Summary
 
 Here is the complete summary of insights from the data and SQL queries used to find them.
 
