@@ -18,11 +18,10 @@ Insightful charts and dashboards using Matplotlib and Seaborn to support data-dr
 
 # Projects Included:
 
-Netflix Content Insights – Analyzed 8,800+ titles to identify high-performing genres and regional content trends.
-
-Yulu Ride Behavior Analysis – Examined ride patterns to uncover key engagement drivers and reduce churn by 12%.
-
-Walmart Sales Trends – Identified seasonal sales spikes and forecasted product performance using time-series techniques.
-
-Lognormal Analytics – Performed multi-category sales and competitor analysis to identify pricing elasticity, seasonal trends, and ad ROI drivers. Delivered actionable insights by segmenting data across price, reviews, weather, and social media mentions.
-
+1. Aerofit_Satistical_analysis
+2. Blinkit_Business_Analysis
+3. Delhivery_Feature_Engineering
+4. Lognormal_Analytics_Assignment
+5. Netflix_EDA
+6. Walmart_CLT_Analysis
+7. Yulu_Hypothesis_Testing
