@@ -7,13 +7,3 @@ Python-based Analysis: In-depth EDA, feature engineering, trend analysis, and da
 SQL Queries: Complex data extraction, transformation, and aggregation with optimized queries for actionable business insights.
 
 Dashboards & Reports: Business-friendly KPIs and interactive charts designed for data-driven decision-making (Tableau/Excel integration).
-
-Projects Included:
-
-Netflix Content Analysis – Identified content trends by genre, region, and release patterns.
-
-Target SQL Analysis – Explored 100K+ orders to derive operational and customer insights.
-
-Yulu Ride Data Analysis – Improved ROI with city-level demand patterns and ride heatmaps.
-
-Delhivery Logistics Analysis – Uncovered delivery delays and optimized routes through EDA.
