@@ -1,4 +1,4 @@
-Here’s a **detailed README description** tailored for your **SQL project repository** that highlights your SQL data analysis expertise in a professional and structured way:
+
 
 ---
 
